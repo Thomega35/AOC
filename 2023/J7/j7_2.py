@@ -8,9 +8,17 @@ def tri(hand):
         else:
             nb_card[card[0]] = 1
 
+    try:
+        nb_joker = nb_card['J']
+        del nb_card['J']
+    except:
+        nb_joker = 0
+
     nb_card = sorted(nb_card.items(), key=lambda x: x[1], reverse=True)
+    if len(nb_card) > 0:
+        nb_card[0] = (nb_card[0][0], nb_card[0][1] + nb_joker)
     print(nb_card)
-    if nb_card[0][1] == 5 :
+    if nb_joker == 5 or nb_card[0][1] == 5 :
         value += 10 ** 1000000
     elif nb_card[0][1] == 4 :
         value += 10 ** 100000
@@ -39,7 +47,7 @@ def tri(hand):
     return value
 
 
-IN = open("j7t.txt").read().splitlines()
+IN = open("j7.txt").read().splitlines()
 
 hands = {}
 
@@ -57,4 +65,4 @@ for index, bid in enumerate(hands):
     result_sum += (index + 1) * bid[1]
 
 print(result_sum)
-# Too high : 254205094
+# correct : 249356515
