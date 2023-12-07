@@ -1,4 +1,4 @@
-# AOC
+# AOC - Advent of Code
 🎄 Personal repository of (Advent of Code)[https://adventofcode.com] solutions in Python. 🎄
 
 # About AOC
