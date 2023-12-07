@@ -1,4 +1,4 @@
-# AOC 2022
+# AOC
 🎄 Personal repository of (Advent of Code)[https://adventofcode.com] solutions in Python. 🎄
 
 # About AOC
