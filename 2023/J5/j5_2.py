@@ -35,9 +35,12 @@ for dict_index in range(0, len(dicts_txt)):
         dicts[dict_index][range(int(elem[1]), int(elem[2])+int(elem[1]))] = int(elem[0]) - int(elem[1])
 
 print("dict processed")
-    
-locations = []
-seeds_res = np.zeros(51045248379, bool)
+print(dicts)
+
+length = 51045248379
+# length = 145248379
+seeds_res = np.zeros(length, bool)
+locations = np.zeros(length, bool)
 for seed_range in seeds:
     print(seed_range)
     seeds_res[seed_range[0]:seed_range[0]+seed_range[1]] = True
@@ -46,6 +49,7 @@ estRentre = False
 for index, seed in enumerate(seeds_res):
     if index % 1000000 == 0:
         print(index, "/", len(seeds_res), estRentre)
+        estRentre = False
     if seed:
         estRentre = True
         location = int(index)
@@ -54,6 +58,13 @@ for index, seed in enumerate(seeds_res):
                 if location in ranges:
                     location = value + location
                     break
-        locations.append(location)
+        locations[location] = True
 
-print(min(locations))
+index = 0
+while True:
+    if locations[index] == True:
+        print(index)
+        break
+    index += 1
+
+# print(min(locations))
