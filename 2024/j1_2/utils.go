@@ -8,10 +8,6 @@ import (
 	"strings"
 )
 
-func helloWorld() {
-	fmt.Println("Hello, World!")
-}
-
 func mustOpenFile(filename string) (*os.File, [][]string) {
 	f, err := os.Open(filename)
 	if err != nil {
@@ -28,7 +24,7 @@ func mustOpenFile(filename string) (*os.File, [][]string) {
 		// Split line into words
 		lines := strings.Split(rawText, "\n")
 		for _, line := range lines {
-			words := strings.Split(line, " ")
+			words := strings.Fields(line)
 			inputParsed = append(inputParsed, words)
 		}
 
