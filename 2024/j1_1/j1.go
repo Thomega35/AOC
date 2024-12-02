@@ -15,8 +15,16 @@ func main() {
 
 	// Parse the input
 	for _, line := range inputParsed {
-		leftValue, _ := strconv.Atoi(line[0])
-		rightValue, _ := strconv.Atoi(line[1])
+		leftValue, err1 := strconv.Atoi(line[0])
+		if err1 != nil {
+			fmt.Println("Error parsing integer:", err1)
+			return
+		}
+		rightValue, err2 := strconv.Atoi(line[1])
+		if err2 != nil {
+			fmt.Println("Error parsing integer:", err2)
+			return
+		}
 		leftList = append(leftList, leftValue)
 		rightList = append(rightList, rightValue)
 	}
