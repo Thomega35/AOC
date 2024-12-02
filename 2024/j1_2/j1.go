@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	f, inputParsed := mustOpenFile("j1.txt")
+	f, inputParsed := mustOpenFile("input.txt")
 
-	leftList := []int{}
-	rightList := []int{}
+	var leftList []int
+	var rightList []int
 
 	// Parse the input
 	for _, line := range inputParsed {
