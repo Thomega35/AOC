@@ -1,6 +1,7 @@
 # AOC - Advent of Code
-🎄 Personal repository of [Advent of Code](https://adventofcode.com) solutions in Python. 🎄
-
+🎄 Personal repository of [Advent of Code](https://adventofcode.com) solutions : 🎄
+- Python (2015/2021/2022/2023)
+- Go (2024)
 
 # About AOC
 Advent of Code is an Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like. One programming puzzle a day is released from 1st to 25th December, divided in two parts (You have to solve the first to get the second). Each day, the difficulty of the programming puzzle is increasing. Advent of Code is created by Eric Wastl, and is 100% free. If you like Advent Of Code and want to support its creator, you can donate to it [here](https://adventofcode.com/2022/support).
