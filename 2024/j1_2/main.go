@@ -1,4 +1,3 @@
-// open j1.txt
 package main
 
 import (

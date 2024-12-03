@@ -1,4 +1,3 @@
-// Print hello world
 package main
 
 import (
