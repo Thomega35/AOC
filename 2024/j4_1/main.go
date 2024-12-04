@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	f, inputParsed := mustOpenFile("input.txt")
+	f, inputParsed := mustOpenFile("test.txt")
 	var xmasCounter *int = new(int)
 	*xmasCounter = 0
 	var x *bool = new(bool)
@@ -85,10 +85,10 @@ func countReverseVertXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bo
 
 func countDiagonalDownXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
 	// Process each line here
-	*x = false
-	*m = false
-	*a = false
 	for i := 0; i < len(inputParsed)+len(inputParsed[0]); i++ {
+		*x = false
+		*m = false
+		*a = false
 		for j := 0; j < len(inputParsed); j++ {
 			if i-j < len(inputParsed[0]) && i-j >= 0 {
 				letter := rune(inputParsed[j][i-j])
@@ -100,10 +100,10 @@ func countDiagonalDownXMAS(inputParsed []string, xmasCounter *int, x *bool, m *b
 
 func countDiagonalDownReverseXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
 	// Process each line here
-	*x = false
-	*m = false
-	*a = false
 	for i := len(inputParsed[0]) + len(inputParsed) - 1; i >= 0; i-- {
+		*x = false
+		*m = false
+		*a = false
 		for j := 0; j < len(inputParsed); j++ {
 			if i-j < len(inputParsed[0]) && i-j >= 0 {
 				letter := rune(inputParsed[j][i-j])
@@ -115,10 +115,10 @@ func countDiagonalDownReverseXMAS(inputParsed []string, xmasCounter *int, x *boo
 
 func countDiagonalUpXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
 	// Process each line here
-	*x = false
-	*m = false
-	*a = false
 	for i := 0; i < len(inputParsed)+len(inputParsed[0]); i++ {
+		*x = false
+		*m = false
+		*a = false
 		for j := 0; j < len(inputParsed); j++ {
 			if i-j < len(inputParsed[0]) && i-j >= 0 {
 				letter := rune(inputParsed[len(inputParsed)-1-j][i-j])
@@ -130,10 +130,10 @@ func countDiagonalUpXMAS(inputParsed []string, xmasCounter *int, x *bool, m *boo
 
 func countDiagonalUpReverseXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
 	// Process each line here
-	*x = false
-	*m = false
-	*a = false
 	for i := len(inputParsed[0]) + len(inputParsed) - 1; i >= 0; i-- {
+		*x = false
+		*m = false
+		*a = false
 		for j := 0; j < len(inputParsed); j++ {
 			if i-j < len(inputParsed[0]) && i-j >= 0 {
 				letter := rune(inputParsed[len(inputParsed)-1-j][i-j])
