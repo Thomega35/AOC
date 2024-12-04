@@ -1,182 +1,123 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 )
 
 func main() {
-	f, inputParsed := mustOpenFile("test.txt")
-	var xmasCounter *int = new(int)
-	*xmasCounter = 0
-	var x *bool = new(bool)
-	var m *bool = new(bool)
-	var a *bool = new(bool)
-	// Inline XMAS
-	countInlineXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Inline Counter: ", *xmasCounter)
-	countReverseInlineXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS REverse Inline Counter: ", *xmasCounter)
-	countVertXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Vert Counter: ", *xmasCounter)
-	countReverseVertXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Reverse Vert Counter: ", *xmasCounter)
-	countDiagonalDownXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Diagonal Down Counter: ", *xmasCounter)
-	countDiagonalDownReverseXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Diagonal Down Reverse Counter: ", *xmasCounter)
-	countDiagonalUpXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Diagonal Up Counter: ", *xmasCounter)
-	countDiagonalUpReverseXMAS(inputParsed, xmasCounter, x, m, a)
-	fmt.Println("XMAS Diagonal Up Reverse Counter: ", *xmasCounter)
-
+	f, inputParsed := mustOpenFile("input.txt")
 	defer f.Close()
+
+	reversedYInputParsed := reverseTableY(inputParsed)
+	reversedXInputParsed := reverseTableX(inputParsed)
+	reversedYXInputParsed := reverseTableX(reversedYInputParsed)
+
+	xmasCounter := 0
+
+	countInlineXMAS(inputParsed, &xmasCounter)
+	fmt.Println("XMAS Inline Counter: ", xmasCounter)
+	countInlineXMAS(reversedXInputParsed, &xmasCounter)
+	fmt.Println("XMAS Reverse Inline Counter: ", xmasCounter)
+	countVertXMAS(inputParsed, &xmasCounter)
+	fmt.Println("XMAS Vert Counter: ", xmasCounter)
+	countVertXMAS(reversedYInputParsed, &xmasCounter)
+	fmt.Println("XMAS Reverse Vert Counter: ", xmasCounter)
+	countDiagonalDownXMAS(inputParsed, &xmasCounter)
+	fmt.Println("XMAS Diagonal Down Counter: ", xmasCounter)
+	countDiagonalDownXMAS(reversedXInputParsed, &xmasCounter)
+	fmt.Println("XMAS Diagonal Up Counter: ", xmasCounter)
+	countDiagonalDownXMAS(reversedYInputParsed, &xmasCounter)
+	fmt.Println("XMAS Diagonal Down Reverse Counter: ", xmasCounter)
+	countDiagonalDownXMAS(reversedYXInputParsed, &xmasCounter)
+	fmt.Println("XMAS Diagonal Up Reverse Counter: ", xmasCounter)
 }
 
-func countInlineXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	for _, line := range inputParsed {
-		// Process each line here
-		*x = false
-		*m = false
-		*a = false
-		for _, letter := range line {
-			processXmasLetter(x, m, a, letter, xmasCounter)
-		}
+func reverseTableY(inputParsed []string) []string {
+	reversedYInputParsed := []string{}
+	for i := len(inputParsed) - 1; i >= 0; i-- {
+		reversedYInputParsed = append(reversedYInputParsed, inputParsed[i])
 	}
+	return reversedYInputParsed
 }
 
-func countReverseInlineXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
+func reverseTableX(inputParsed []string) []string {
+	reversedXInputParsed := []string{}
 	for _, line := range inputParsed {
-		// Process each line here
-		*x = false
-		*m = false
-		*a = false
+		reversedLine := ""
 		for i := len(line) - 1; i >= 0; i-- {
-			letter := rune(line[i])
-			processXmasLetter(x, m, a, letter, xmasCounter)
+			reversedLine += string(line[i])
+		}
+		reversedXInputParsed = append(reversedXInputParsed, reversedLine)
+	}
+	return reversedXInputParsed
+}
+
+func countInlineXMAS(inputParsed []string, xmasCounter *int) {
+	for _, line := range inputParsed {
+		x, m, a := false, false, false
+		for _, letter := range line {
+			processXmasLetter(&x, &m, &a, letter, xmasCounter)
 		}
 	}
 }
 
-func countVertXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
+func countVertXMAS(inputParsed []string, xmasCounter *int) {
 	for i := 0; i < len(inputParsed[0]); i++ {
-		// Process each line here
-		*x = false
-		*m = false
-		*a = false
+		x, m, a := false, false, false
 		for _, line := range inputParsed {
 			letter := rune(line[i])
-			processXmasLetter(x, m, a, letter, xmasCounter)
+			processXmasLetter(&x, &m, &a, letter, xmasCounter)
 		}
 	}
 }
 
-func countReverseVertXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	for i := 0; i < len(inputParsed[0]); i++ {
-		// Process each line here
-		*x = false
-		*m = false
-		*a = false
-		for j := len(inputParsed) - 1; j >= 0; j-- {
-			letter := rune(inputParsed[j][i])
-			processXmasLetter(x, m, a, letter, xmasCounter)
-		}
-	}
-}
-
-func countDiagonalDownXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	// Process each line here
+func countDiagonalDownXMAS(inputParsed []string, xmasCounter *int) {
 	for i := 0; i < len(inputParsed)+len(inputParsed[0]); i++ {
-		*x = false
-		*m = false
-		*a = false
+		x, m, a := false, false, false
 		for j := 0; j < len(inputParsed); j++ {
 			if i-j < len(inputParsed[0]) && i-j >= 0 {
 				letter := rune(inputParsed[j][i-j])
-				processXmasLetter(x, m, a, letter, xmasCounter)
-			}
-		}
-	}
-}
-
-func countDiagonalDownReverseXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	// Process each line here
-	for i := len(inputParsed[0]) + len(inputParsed) - 1; i >= 0; i-- {
-		*x = false
-		*m = false
-		*a = false
-		for j := 0; j < len(inputParsed); j++ {
-			if i-j < len(inputParsed[0]) && i-j >= 0 {
-				letter := rune(inputParsed[j][i-j])
-				processXmasLetter(x, m, a, letter, xmasCounter)
-			}
-		}
-	}
-}
-
-func countDiagonalUpXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	// Process each line here
-	for i := 0; i < len(inputParsed)+len(inputParsed[0]); i++ {
-		*x = false
-		*m = false
-		*a = false
-		for j := 0; j < len(inputParsed); j++ {
-			if i-j < len(inputParsed[0]) && i-j >= 0 {
-				letter := rune(inputParsed[len(inputParsed)-1-j][i-j])
-				processXmasLetter(x, m, a, letter, xmasCounter)
-			}
-		}
-	}
-}
-
-func countDiagonalUpReverseXMAS(inputParsed []string, xmasCounter *int, x *bool, m *bool, a *bool) {
-	// Process each line here
-	for i := len(inputParsed[0]) + len(inputParsed) - 1; i >= 0; i-- {
-		*x = false
-		*m = false
-		*a = false
-		for j := 0; j < len(inputParsed); j++ {
-			if i-j < len(inputParsed[0]) && i-j >= 0 {
-				letter := rune(inputParsed[len(inputParsed)-1-j][i-j])
-				processXmasLetter(x, m, a, letter, xmasCounter)
+				processXmasLetter(&x, &m, &a, letter, xmasCounter)
 			}
 		}
 	}
 }
 
 func processXmasLetter(x, m, a *bool, letter rune, xmasCounter *int) {
-	// Process XMAS letter here
-	if !*x {
-		if letter == 'X' {
-			*x = true
-		}
-	} else if !*m {
-		if letter == 'M' {
-			*m = true
-		} else if letter != 'X' {
-			*x = false
-		}
-	} else if !*a {
-		if letter == 'A' {
-			*a = true
-		} else if letter == 'X' {
-			*m = false
-		} else {
-			*x = false
-			*m = false
-		}
-	} else {
-		if letter == 'S' {
-			*xmasCounter++
-			*x = false
-			*m = false
-			*a = false
-		} else if letter == 'X' {
-			*m = false
-			*a = false
-		} else {
-			*x = false
-			*m = false
-			*a = false
-		}
+	switch {
+	case !*x && letter == 'X':
+		*x = true
+	case *x && !*m && letter == 'M':
+		*m = true
+	case *x && *m && !*a && letter == 'A':
+		*a = true
+	case *x && *m && *a && letter == 'S':
+		*x, *m, *a = false, false, false
+		(*xmasCounter)++
+	default:
+		*x, *m, *a = letter == 'X', false, false
 	}
+}
+
+func mustOpenFile(filename string) (*os.File, []string) {
+	f, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return nil, nil
+	}
+
+	inputParsed := []string{}
+	// splitline
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		rawText := scanner.Text()
+		// Process each line here
+		// Split line into words
+		inputParsed = append(inputParsed, strings.Split(rawText, "\n")...)
+
+	}
+	return f, inputParsed
 }
