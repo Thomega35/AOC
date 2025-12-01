@@ -65,6 +65,18 @@ func makeDotedLine(inputParsed string) []int {
 	return dotedLine
 }
 
+func calculateChecksum(shifterLine []int) int {
+	checksum := 0
+
+	for i := 0; i < len(shifterLine); i++ {
+		if shifterLine[i] != -1 {
+			temp := i * shifterLine[i]
+			checksum += temp
+		}
+	}
+	return checksum
+}
+
 func shiftDotedLine(dotedLine []int) []int {
 	shiftedLine := make([]int, len(dotedLine))
 	copy(shiftedLine, dotedLine)
@@ -87,18 +99,6 @@ func shiftDotedLine(dotedLine []int) []int {
 		}
 	}
 	return shiftedLine
-}
-
-func calculateChecksum(shifterLine []int) int {
-	checksum := 0
-
-	for i := 0; i < len(shifterLine); i++ {
-		if shifterLine[i] != -1 {
-			temp := i * shifterLine[i]
-			checksum += temp
-		}
-	}
-	return checksum
 }
 
 func shiftLeftGroup(shiftedLine []int, indexPattern int, numberInGroup int, valOfGroup int) {
