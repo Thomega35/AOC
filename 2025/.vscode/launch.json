@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Run jX/part_X (fixed cwd)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${workspaceFolder}/j2/part_2",
+            "console": "integratedTerminal"
+        }
+    ]
+}
