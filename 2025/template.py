@@ -6,6 +6,5 @@ def solution(vals_parsed) :
 
 if __name__ == "__main__" :
     vals = open('input.txt', 'r').read().splitlines()
-    vals_parsed = list(vals[0].split(','))
-    print(vals_parsed)
+    vals_parsed = [ i.split(',') for i in (vals)]
     print(solution(vals_parsed))
